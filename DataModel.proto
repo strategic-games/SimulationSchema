@@ -27,7 +27,7 @@ message Simulation {
     string title = 1;
     string supplement = 2;
     google.protobuf.Timestamp date = 3;
-    string version = 4;
+    Version version = 4;
   }
   message Condition {
     message Player {
