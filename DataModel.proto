@@ -67,4 +67,5 @@ message SimulationResults {
     uint32 condition = 3;
   }
   repeated Trial trials = 1;
+  Simulation config = 2;
 }
