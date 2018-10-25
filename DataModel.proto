@@ -1,6 +1,8 @@
 syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
+package strategic_games;
+option swift_prefix="SG";
 
 message Version {
   string short = 1;
