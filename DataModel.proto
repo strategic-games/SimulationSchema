@@ -39,6 +39,7 @@ message Simulation {
     Player starter = 2;
     Player opponent = 3;
     uint32 trials = 4;
+    Vocabulary vocabulary = 5;
   }
   Info info = 1;
   repeated Condition conditions = 2;
