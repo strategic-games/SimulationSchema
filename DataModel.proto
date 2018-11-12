@@ -33,7 +33,14 @@ message Simulation {
   }
   message Condition {
     message Player {
+      enum Preference {
+        random = 0;
+        availability = 1;
+        long = 2;
+        short = 3;
+      }
       Vocabulary vocabulary = 1;
+      Preference preference = 2;
     }
     string start_letters = 1;
     Player starter = 2;
