@@ -33,14 +33,15 @@ message Simulation {
   }
   message Condition {
     message Player {
-      enum Preference {
+      enum BegriffixStrategy {
         random = 0;
         availability = 1;
         long = 2;
         short = 3;
+        min_places = 4;
       }
       Vocabulary vocabulary = 1;
-      Preference preference = 2;
+      BegriffixStrategy begriffixStrategy = 3;
     }
     string start_letters = 1;
     Player starter = 2;
