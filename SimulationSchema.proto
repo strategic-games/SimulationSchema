@@ -1,0 +1,137 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+package strategic_games;
+option swift_prefix="SG";
+
+/// A message describing a software version
+message Version {
+  /// A short version string following semantic versioning conventions (1.0.0)
+  string short = 1;
+  /// The build number relative to the short version
+  string build = 2;
+  /// The git hash of the commit the build is based on
+  string hash = 3;
+}
+
+/// A list of words which is used as foundation for a vocabulary
+message WordList {
+   /// A short description of the word list's origin
+   string source = 1;
+   /// The words in the list
+   repeated string words = 2;
+}
+
+/// A description where a file containing a word list can be found and which part of it to take
+message Vocabulary {
+  /// A file path to a file containing a serialized word list message
+  string path = 1;
+  /// The selection mode; if omitted, the full list is taken
+  oneof select {
+    /// Take the first n words
+    uint32 prefix = 2;
+    /// Take the last n words
+    uint32 suffix = 3;
+    /// Take a sample of size n
+    uint32 sample = 4;
+  }
+}
+
+/// A simulation configuration
+message Simulation {
+  /// Informational metadata
+  message Info {
+    /// A short title
+    string title = 1;
+    /// More explanations if needed
+    string supplement = 2;
+    /// Indicates when the simulation was run
+    google.protobuf.Timestamp date = 3;
+    /// Which Hangman version was used
+    Version version = 4;
+  }
+  /// A set of (experimental) variables describing a simulation
+  message Condition {
+    /// Variables describing a player
+    message Player {
+      /// The playing strategies that can be used
+      enum BegriffixStrategy {
+        /// Take a random move from all valid moves
+        random = 0;
+        /// Prefer words/pattern with the least number of empty starting fields (see availability heuristic)
+        availability = 1;
+        /// Take a Word with the maximum length
+        long = 2;
+        /// Take a Word with the minimum length
+        short = 3;
+        /// Take a word which minimizes the number of valid places for the next player
+        min_places = 4;
+      }
+      /// The player's vocabulary
+      Vocabulary vocabulary = 1;
+      /// The player's playing strategy
+      BegriffixStrategy begriffixStrategy = 3;
+    }
+    /// The four start letters to be used in the game
+    string start_letters = 1;
+    /// The start player's config
+    Player starter = 2;
+    /// The opponent's config; hangman uses the start player if omitted
+    Player opponent = 3;
+    /// How many times this game should be played
+    uint32 trials = 4;
+    /// The reference vocabulary used by Begriffix for validation
+    Vocabulary vocabulary = 5;
+  }
+  /// Metadata describing the simulation
+  Info info = 1;
+  /// A list of different simulation configurations (or experimental conditions)
+  repeated Condition conditions = 2;
+}
+
+/// Simulation result data
+message SimulationResults {
+  /// The place on a game board where a word was written
+  message Place {
+    /// A writing direction
+    enum Direction {
+      Horizontal = 0;
+      Vertical = 1;
+    }
+    /// The row of the word's first letter
+    uint32 row = 1;
+    /// The column of the word's first letter
+    uint32 column = 2;
+    /// The word's writing direction
+    Direction direction = 3;
+  }
+  /// Data describing where valid word could have been written
+  message Hit {
+    /// A valid place to write
+    Place place = 1;
+    /// The words in the player's vocabulary matching the pattern at the given place
+    repeated string words = 2;
+  }
+  /// A writing action
+  message Move {
+    /// The writing place
+    Place place = 1;
+    /// The written word
+    string word = 2;
+    /// The possible valid moves this move was taken from
+    repeated Hit hits = 3;
+  }
+  /// The data of one full game
+  message Trial {
+    /// The sequence of moves in this game
+    repeated Move moves = 1;
+    /// The trial number for constructing the correct game sequence
+    uint32 trial = 2;
+    /// The index of the condition this game is based on
+    uint32 condition = 3;
+  }
+  /// A sequence of the games played in this simulation
+  repeated Trial trials = 1;
+  /// The used configuration
+  Simulation config = 2;
+}
