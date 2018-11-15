@@ -1,3 +1,4 @@
+/// The schema for creating Begriffix game simulations
 syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
