@@ -50,6 +50,8 @@ message Simulation {
     google.protobuf.Timestamp date = 3;
     /// Which Hangman version was used
     Version version = 4;
+    /// A seed number for the rng used in simulations
+    uint64 random_seed = 5;
   }
   /// A set of (experimental) variables describing a simulation
   message Condition {
