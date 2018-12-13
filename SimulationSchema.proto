@@ -85,6 +85,8 @@ message Simulation {
     uint32 trials = 4;
     /// The reference vocabulary used by Begriffix for validation
     Vocabulary vocabulary = 5;
+    /// The side length of the game board in fields
+    uint32 board_size = 6;
   }
   /// Metadata describing the simulation
   Info info = 1;
