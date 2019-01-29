@@ -75,8 +75,11 @@ message Simulation {
       /// The player's playing strategy
       BegriffixStrategy begriffixStrategy = 3;
     }
+    /// Minimum word lengths allowed in Begriffix games
     message WordMinLength {
+    /// The minimum word length allowed in the first turn
     uint32 first_turn = 1;
+    /// The minimum word length allowed in the turns after the first turn
     uint32 next_turns = 2;
     }
     /// The four start letters to be used in the game
@@ -91,6 +94,7 @@ message Simulation {
     Vocabulary vocabulary = 5;
     /// The side length of the game board in fields
     uint32 board_size = 6;
+    /// The minimum word lengths allowed in the game
     WordMinLength word_min_length = 7;
   }
   /// Metadata describing the simulation
