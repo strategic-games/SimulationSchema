@@ -77,10 +77,10 @@ message Simulation {
     }
     /// Minimum word lengths allowed in Begriffix games
     message WordMinLength {
-    /// The minimum word length allowed in the first turn
-    uint32 first_turn = 1;
-    /// The minimum word length allowed in the turns after the first turn
-    uint32 next_turns = 2;
+    /// The minimum word length allowed in the restricted phase
+    uint32 restricted = 1;
+    /// The minimum word length allowed in the liberal phase
+    uint32 liberal = 2;
     }
     /// The four start letters to be used in the game
     string start_letters = 1;
