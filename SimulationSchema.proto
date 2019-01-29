@@ -75,6 +75,10 @@ message Simulation {
       /// The player's playing strategy
       BegriffixStrategy begriffixStrategy = 3;
     }
+    message WordMinLength {
+    uint32 first_turn = 1;
+    uint32 next_turns = 2;
+    }
     /// The four start letters to be used in the game
     string start_letters = 1;
     /// The start player's config
@@ -87,6 +91,7 @@ message Simulation {
     Vocabulary vocabulary = 5;
     /// The side length of the game board in fields
     uint32 board_size = 6;
+    WordMinLength word_min_length = 7;
   }
   /// Metadata describing the simulation
   Info info = 1;
