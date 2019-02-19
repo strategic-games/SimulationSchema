@@ -96,6 +96,8 @@ message Simulation {
     uint32 board_size = 6;
     /// The minimum word lengths allowed in the game
     WordMinLength word_min_length = 7;
+    /// Indicates if player B must write orthogonally to player A in first turn
+    bool first_orthogonal = 8;
   }
   /// Metadata describing the simulation
   Info info = 1;
