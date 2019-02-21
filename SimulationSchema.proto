@@ -77,10 +77,25 @@ message Simulation {
     }
     /// Minimum word lengths allowed in Begriffix games
     message WordMinLength {
-    /// The minimum word length allowed in the restricted phase
-    uint32 restricted = 1;
-    /// The minimum word length allowed in the liberal phase
-    uint32 liberal = 2;
+    /// The minimum word length allowed in the first turn
+    uint32 first = 3;
+    /// The minimum word length allowed after the first turn
+    uint32 other = 4;
+    }
+    message DirectionRestrictions {
+      /// Different restriction modes of writing direction in the first turn
+      enum Mode {
+        /// There is no restriction
+        none = 0;
+        /// Player A is unrestricted, player B must write orthogonally to player A
+        starter = 1;
+        /// Player A must write horizontally, player B vertically
+        fixed = 2;
+      }
+      /// The restriction of writing direction in the first turn
+      Mode first = 1;
+      /// The restriction of writing direction after the first turn
+      Mode other = 2;
     }
     /// The four start letters to be used in the game
     string start_letters = 1;
@@ -96,8 +111,8 @@ message Simulation {
     uint32 board_size = 6;
     /// The minimum word lengths allowed in the game
     WordMinLength word_min_length = 7;
-    /// Indicates if player B must write orthogonally to player A in first turn
-    bool first_orthogonal = 8;
+    /// The restriction settings of writing direction in a game
+    DirectionRestrictions direction_restrictions = 9;
   }
   /// Metadata describing the simulation
   Info info = 1;
