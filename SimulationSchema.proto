@@ -15,18 +15,20 @@ message Version {
   string hash = 3;
 }
 
-/// A list of words which is used as foundation for a vocabulary
-message WordList {
-   /// A short description of the word list's origin
-   string source = 1;
-   /// The words in the list
-   repeated string words = 2;
+/// A dictionary of word lists which can be used as foundation for a vocabulary
+message WordLists {
+  message Entry {
+    /// A short description of the word list's origin
+    string key = 1;
+    /// The words in the list
+    repeated string value = 2;
+  }
+  repeated Entry entries = 1;
 }
-
 /// A description where a file containing a word list can be found and which part of it to take
 message Vocabulary {
-  /// A file path to a file containing a serialized word list message
-  string path = 1;
+  /// A selection key for the wordlists dictionary
+  string key = 5;
   /// The selection mode; if omitted, the full list is taken
   oneof select {
     /// Take the first n words
@@ -118,6 +120,8 @@ message Simulation {
   Info info = 1;
   /// A list of different simulation configurations (or experimental conditions)
   repeated Condition conditions = 2;
+  /// The word lists which can be used for vocabularies in this simulation
+  WordLists word_lists = 3;
 }
 
 /// Simulation result data
